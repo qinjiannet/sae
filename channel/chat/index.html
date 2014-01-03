@@ -1,0 +1,44 @@
+{% extends "default.html" %}
+
+{% block title %}Channel聊天{% endblock %}
+
+{% block extrahead %}
+<script src="http://channel.sinaapp.com/api.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	var channel = sae.Channel('{{url}}');
+	channel.onmessage = function (message) {
+		// handle with message
+		alert(message.data);
+	}
+	$('#inputForm').on('submit',function(evt){
+		evt.preventDefault();
+		/*
+		$.post( '/chat/', {'content': $('textarea[name=content]').val(),'csrfmiddlewaretoken': $('[name="csrfmiddlewaretoken"]')[0].value} )
+		.done(function( data ) {
+		})
+		.fail(function( data ) {
+		});
+		*/
+		channel.send($('textarea[name=content]').val());
+	});
+});
+</script>
+{% endblock %}
+{% block banner %}
+{% endblock %}
+{% block content %}
+<div class="row-fluid">
+<form id="inputForm" action="" method="POST" class="form-horizontal">
+{% csrf_token %}
+	<div class="control-group">
+	<textarea name="content" value="" rows="12" style="width:500px; max-width:500px;" >{{url}}</textarea>
+	</div>
+	<div class="form-actions">
+		<input type="submit" class="btn btn-primary" value="发送消息">
+	</div>
+</form>
+</div>
+</div>
+{% endblock %}
+
