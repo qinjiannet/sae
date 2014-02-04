@@ -5,7 +5,6 @@ from django.shortcuts import get_object_or_404, render_to_response,redirect
 from django.http import HttpResponse,Http404
 from django.template import RequestContext
 from django.views.decorators.csrf import csrf_protect,csrf_exempt
-from util.Encoder import ComplexEncoder
 import json
 from sae import channel
 
@@ -24,14 +23,14 @@ def index(request):
 def connected(request):
 	res = request.POST
 	print res
-	return HttpResponse(json.dumps(res,cls=ComplexEncoder), mimetype="text/plain")
+	return HttpResponse(json.dumps(res), mimetype="text/plain")
 @csrf_exempt
 def disconnected(request):
 	res = request.POST
 	print res
-	return HttpResponse(json.dumps(res,cls=ComplexEncoder), mimetype="text/plain")
+	return HttpResponse(json.dumps(res), mimetype="text/plain")
 @csrf_exempt
 def message(request):
 	res = request.POST
 	print res
-	return HttpResponse(json.dumps(res,cls=ComplexEncoder), mimetype="text/plain")
+	return HttpResponse(json.dumps(res), mimetype="text/plain")
